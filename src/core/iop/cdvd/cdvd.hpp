@@ -150,6 +150,7 @@ class CDVD_Drive
         uint32_t read_to_RAM(uint8_t* RAM, uint32_t bytes);
         uint8_t* read_file(std::string name, uint32_t& file_size);
         bool load_disc(const char* name, CDVD_CONTAINER container);
+		bool load_container(const char* name, std::unique_ptr<CDVD_Container> container);
 
         uint8_t read_drive_status();
         uint8_t read_N_command();

@@ -420,6 +420,10 @@ bool Emulator::load_CDVD(const char *name, CDVD_CONTAINER type)
 {
     return cdvd.load_disc(name, type);
 }
+bool Emulator::load_CDVD_Container(const char* name, std::unique_ptr<CDVD_Container> container)
+{
+	return cdvd.load_container(name, std::move(container));
+}
 
 void Emulator::load_memcard(int port, const char *name)
 {

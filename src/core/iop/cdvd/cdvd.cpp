@@ -255,24 +255,33 @@ void CDVD_Drive::handle_N_command()
     }
 }
 
+
+
 bool CDVD_Drive::load_disc(const char *name, CDVD_CONTAINER a_container)
 {
-    //container = a_container;
+    std::unique_ptr<CDVD_Container> c;
     switch (a_container)
     {
         case CDVD_CONTAINER::ISO:
-            container = std::unique_ptr<CDVD_Container>(new ISO_Reader());
+            c = std::unique_ptr<CDVD_Container>(new ISO_Reader());
             break;
         case CDVD_CONTAINER::CISO:
-            container = std::unique_ptr<CDVD_Container>(new CSO_Reader());
+            c = std::unique_ptr<CDVD_Container>(new CSO_Reader());
             break;
         case CDVD_CONTAINER::BIN_CUE:
-            container = std::unique_ptr<CDVD_Container>(new BinCueReader());
+            c = std::unique_ptr<CDVD_Container>(new BinCueReader());
             break;
         default:
             container = nullptr;
             return false;
     }
+	return load_container(name, std::move(c));
+}
+
+
+bool CDVD_Drive::load_container(const char* name, std::unique_ptr<CDVD_Container> c)
+{
+	container = std::move(c);
     if (!container->open(name)) // No Filename, No disc.
     {
         printf("No Disk Inserted \n");
