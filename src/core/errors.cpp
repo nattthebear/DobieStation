@@ -10,6 +10,7 @@
     va_start(args, format);
     vsnprintf(output, ERROR_STRING_MAX_LENGTH, format, args);
     va_end(args);
+	fputs(output, stderr);
     throw Emulation_error(output);
 }
 
