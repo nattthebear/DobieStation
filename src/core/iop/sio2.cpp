@@ -111,6 +111,9 @@ void SIO2::write_serial(uint8_t value)
         FIFO.push(0xFF);
 }
 
+extern bool hacky_lag_flag;
+extern void (*hacky_input_callback)();
+
 void SIO2::write_device(uint8_t value)
 {
     switch (active_command)
@@ -133,6 +136,9 @@ void SIO2::write_device(uint8_t value)
             break;
         case SIO_DEVICE::PAD:
         {
+			hacky_lag_flag = false;
+			if (hacky_input_callback)
+				hacky_input_callback();
             RECV1 = 0x1100;
             if (port)
             {
