@@ -223,6 +223,8 @@ stereo_sample SPU::voice_gen_sample(int voice_id)
     return out;
 }
 
+void hacky_enqueue_audio(stereo_sample s);
+
 void SPU::gen_sample()
 {
 
@@ -285,7 +287,8 @@ void SPU::gen_sample()
 
     if (wav_output)
     {
-        coreout->append_pcm_stereo(core_output);
+        // coreout->append_pcm_stereo(core_output);
+		hacky_enqueue_audio(core_output);
     }
 
     noise.step();
