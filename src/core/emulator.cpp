@@ -117,7 +117,7 @@ void Emulator::run()
         }
     }
 
-    memcard.save_if_dirty();
+    // memcard.save_if_dirty();
 
     frame_ended = false;
 
